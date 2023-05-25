@@ -12,10 +12,10 @@
         android:theme="@style/Theme.ProjetoFabrica"
         tools:targetApi="31">
         <activity
-            android:name=".activity.FormAgenda2"
+            android:name=".activity.FormAgendamento"
             android:exported="false" />
         <activity
-            android:name=".activity.EditarVisitaActivity"
+            android:name=".activity.EditarVisita"
             android:exported="false" />
         <activity
             android:name=".activity.FormAgenda"

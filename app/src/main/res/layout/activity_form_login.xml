@@ -27,7 +27,10 @@
         <View
             android:id="@+id/containerComponents"
             style="@style/ContainerComponents"
+            android:layout_width="372dp"
+            android:layout_height="271dp"
             android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/logo" />
@@ -55,7 +58,10 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bt_entrar"
             style="@style/Button"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:text="@string/entrar"
+            app:layout_constraintBottom_toBottomOf="@+id/containerComponents"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edit_senha" />

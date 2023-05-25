@@ -105,11 +105,13 @@ public class FormCadastro extends AppCompatActivity {
 
     private void SalvarDadosUser(){
         String nome = edit_nome.getText().toString();
+        String email = edit_email.getText().toString();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         Map<String,Object> users = new HashMap<>();
         users.put("nome",nome);
+        users.put("email",email);
 
         userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 

@@ -22,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class VisitasAgendadasActivity extends AppCompatActivity implements VisitaAdapter.OnItemClickListener {
+public class VisitasAgendadas extends AppCompatActivity{
 
     private RecyclerView recyclerViewVisitas;
     private VisitaAdapter visitaAdapter;
@@ -41,7 +41,6 @@ public class VisitasAgendadasActivity extends AppCompatActivity implements Visit
 
         visitasRef = FirebaseDatabase.getInstance().getReference().child("visitas");
         visitaAdapter = new VisitaAdapter(new ArrayList<>());
-        visitaAdapter.setOnItemClickListener(this);
         recyclerViewVisitas.setAdapter(visitaAdapter);
     }
 
@@ -73,35 +72,9 @@ public class VisitasAgendadasActivity extends AppCompatActivity implements Visit
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(VisitasAgendadasActivity.this, "Falha ao carregar visitas agendadas", Toast.LENGTH_SHORT).show();
+                Toast.makeText(VisitasAgendadas.this, "Falha ao carregar visitas agendadas", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    @Override
-    public void onEditClick(Visita visita) {
-        // Lógica para editar a visita
-        // Abra a tela de edição da visita, passando os dados da visita
-        Intent intent = new Intent(this, EditarVisitaActivity.class);
-        intent.putExtra("visit", visita);
-        startActivity(intent);
-    }
-
-    @Override
-    public void onCancelClick(Visita visita) {
-        // Lógica para cancelar a visita
-        // Remova a visita do Firebase
-        DatabaseReference visitaRef = visitasRef.child(visita.getId());
-        visitaRef.removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(VisitasAgendadasActivity.this, "Visita cancelada com sucesso", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(VisitasAgendadasActivity.this, "Falha ao cancelar visita", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 }

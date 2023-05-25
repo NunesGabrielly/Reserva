@@ -1,5 +1,6 @@
 package com.example.projetofabrica.activity;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +9,8 @@ import android.content.Context;
 import android.os.Bundle;
 
 import android.content.Intent;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -19,6 +22,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projetofabrica.R;
 import com.example.projetofabrica.adapter.VisitaAdapter;
+import com.google.android.gms.tasks.OnCanceledListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -32,6 +38,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +65,7 @@ public class FormAgenda extends AppCompatActivity {
         nomeUser = findViewById(R.id.textNomeUser);
         recyclerView = findViewById(R.id.recycler);
 
+
         visitasList = new ArrayList<>();
         visitaAdapter= new VisitaAdapter(visitasList);
 
@@ -67,19 +75,10 @@ public class FormAgenda extends AppCompatActivity {
         btAgendar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(FormAgenda.this, FormAgenda2.class);
+                Intent intent = new Intent(FormAgenda.this, FormAgendamento.class);
                 startActivity(intent);
             }
         });
-
-        btEditar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(FormAgenda.this, EditarVisitaActivity.class);
-                startActivity(intent);
-            }
-        });
-
         btSair.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,26 +96,18 @@ public class FormAgenda extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             String userId = user.getUid();
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("visitas");
-
-            Query query = databaseReference.orderByChild("userId").equalTo(userId);
-            query.addValueEventListener(new ValueEventListener() {
+            Task<QuerySnapshot> qsnapshot = FirebaseFirestore.getInstance().collection("Visitas").whereEqualTo("user_id", userId).get();
+            qsnapshot.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    visitasList.clear();
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        Visita visita = snapshot.getValue(Visita.class);
-                        visitasList.add(visita);
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    for(DocumentSnapshot doc : qsnapshot.getResult().getDocuments()) {
+                       Visita visita = new Visita(doc.getId(), doc.getString("nome"), doc.getString("data"), doc.getString("hora"));
+                       visitasList.add(visita);
                     }
                     visitaAdapter.notifyDataSetChanged();
                 }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-                    String errorMessage = databaseError.getMessage();
-                    Toast.makeText(FormAgenda.this, "Erro ao carregar as visitas: " + errorMessage, Toast.LENGTH_SHORT).show();
-                }
             });
+
         }
     }
 

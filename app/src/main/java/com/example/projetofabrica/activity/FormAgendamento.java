@@ -17,49 +17,23 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TimePicker;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.Calendar;
-
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class FormAgenda2 extends AppCompatActivity {
-    private EditText editNome;
-    private EditText editData;
-    private EditText editHora;
+public class FormAgendamento extends AppCompatActivity {
+    private EditText editNome, editData, editHora;
     private Button btSalvar;
-    String visitaId;
+    String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_form_agenda2);
+        setContentView(R.layout.activity_form_agendamento);
         getSupportActionBar().hide();
 
         editNome = findViewById(R.id.edit_nome);
@@ -71,6 +45,8 @@ public class FormAgenda2 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 salvarVisita();
+                Intent intent =  new Intent(FormAgendamento.this, FormAgenda.class);
+                startActivity(intent);
             }
         });
     }
@@ -87,9 +63,10 @@ public class FormAgenda2 extends AppCompatActivity {
         visitas.put("data",data);
         visitas.put("hora",hora);
 
-        visitaId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        DocumentReference documentReference = db.collection("Visitas").document(visitaId);
+        visitas.put("user_id", userID);
+        DocumentReference documentReference = db.collection("Visitas").document();
         documentReference.set(visitas).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
@@ -103,6 +80,7 @@ public class FormAgenda2 extends AppCompatActivity {
                     }
                 });
     }
+
     public void fecharTeclado(View view){
         InputMethodManager fecharTeclado = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         fecharTeclado.hideSoftInputFromWindow(view.getWindowToken(), 0);

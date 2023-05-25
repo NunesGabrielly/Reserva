@@ -37,7 +37,12 @@ public class FormLogin extends AppCompatActivity {
         setContentView(R.layout.activity_form_login);
 
         getSupportActionBar().hide();
-        IniciarComponentes();
+
+        text_tela_cadastro = findViewById(R.id.text_tela_cadastro);
+        edit_email = findViewById(R.id.edit_email);
+        edit_senha = findViewById(R.id.edit_senha);
+        bt_entrar = findViewById(R.id.bt_entrar);
+        progressBar = findViewById(R.id.progressbar);
 
         text_tela_cadastro.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,14 +120,6 @@ public class FormLogin extends AppCompatActivity {
         Intent intent = new Intent(FormLogin.this, FormAgenda.class);
         startActivity(intent);
 //        finish();
-    }
-
-    private void IniciarComponentes(){
-        text_tela_cadastro = findViewById(R.id.text_tela_cadastro);
-        edit_email = findViewById(R.id.edit_email);
-        edit_senha = findViewById(R.id.edit_senha);
-        bt_entrar = findViewById(R.id.bt_entrar);
-        progressBar = findViewById(R.id.progressbar);
     }
 
     public void fecharTeclado(View view){

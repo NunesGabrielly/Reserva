@@ -12,13 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/backgroud"
-        tools:context=".activity.FormAgenda2">
+        tools:context=".activity.FormAgendamento">
 
         <TextView
             android:id="@+id/txtAgendar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="50dp"
             android:text="@string/agendamento"
             android:textColor="@color/black"
             android:textSize="35sp"
@@ -33,7 +33,7 @@
             style="@style/ContainerComponents"
             android:layout_width="367dp"
             android:layout_height="267dp"
-            android:layout_marginTop="68dp"
+            android:layout_marginTop="80dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="parent"

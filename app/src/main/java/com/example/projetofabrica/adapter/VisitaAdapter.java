@@ -1,5 +1,6 @@
 package com.example.projetofabrica.adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projetofabrica.R;
+import com.example.projetofabrica.activity.EditarVisita;
+import com.example.projetofabrica.activity.FormAgenda;
 import com.example.projetofabrica.activity.Visita;
 
 import java.util.List;
@@ -17,14 +20,9 @@ import java.util.List;
 public class VisitaAdapter extends RecyclerView.Adapter<VisitaAdapter.VisitaViewHolder> {
 
     private List<Visita> visitas;
-    private OnItemClickListener itemClickListener;
 
     public VisitaAdapter(List<Visita> visitas) {
         this.visitas = visitas;
-    }
-
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.itemClickListener = listener;
     }
 
     @NonNull
@@ -42,21 +40,12 @@ public class VisitaAdapter extends RecyclerView.Adapter<VisitaAdapter.VisitaView
         holder.textDataVisita.setText(visita.getData());
         holder.textHoraVisita.setText(visita.getHora());
 
-        holder.btnEditarVisita.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (itemClickListener != null) {
-                    itemClickListener.onEditClick(visita);
-                }
-            }
-        });
-
-        holder.btnCancelarVisita.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (itemClickListener != null) {
-                    itemClickListener.onCancelClick(visita);
-                }
+                Intent intent = new Intent(v.getContext(), EditarVisita.class);
+                intent.putExtra("agendaId", visita.getId());
+                v.getContext().startActivity(intent);
             }
         });
     }
@@ -70,26 +59,19 @@ public class VisitaAdapter extends RecyclerView.Adapter<VisitaAdapter.VisitaView
         this.visitas = visitas;
     }
 
+
+
     public static class VisitaViewHolder extends RecyclerView.ViewHolder {
         TextView textNomeVisita;
         TextView textDataVisita;
         TextView textHoraVisita;
-        Button btnEditarVisita;
-        Button btnCancelarVisita;
 
         public VisitaViewHolder(@NonNull View itemView) {
             super(itemView);
-            textNomeVisita = itemView.findViewById(R.id.textNomeVisita);
-            textDataVisita = itemView.findViewById(R.id.textDataVisita);
-            textHoraVisita = itemView.findViewById(R.id.textHoraVisita);
-            btnEditarVisita = itemView.findViewById(R.id.btnEditarVisita);
-            btnCancelarVisita = itemView.findViewById(R.id.btnCancelarVisita);
+            this.textNomeVisita = itemView.findViewById(R.id.textNomeVisita);
+            this.textDataVisita = itemView.findViewById(R.id.textDataVisita);
+            this.textHoraVisita = itemView.findViewById(R.id.textHoraVisita);
         }
-    }
-
-    public interface OnItemClickListener {
-        void onEditClick(Visita visita);
-        void onCancelClick(Visita visita);
     }
 }
 

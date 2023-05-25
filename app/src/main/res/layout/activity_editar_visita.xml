@@ -12,7 +12,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/backgroud"
             android:onClick="fecharTeclado"
-            tools:context=".activity.EditarVisitaActivity">
+            tools:context=".activity.EditarVisita">
 
                 <TextView
                     android:id="@+id/txtAgendar"
