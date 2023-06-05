@@ -1,9 +1,12 @@
 package com.example.projetofabrica.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -24,8 +27,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class EditarVisita extends AppCompatActivity {
 
-    private EditText editNomeVisita, editDataVisita, editHoraVisita;
+    private EditText editDataVisita, editHoraVisita;
     private Button btnSalvarEdicao;
+    private AutoCompleteTextView editNomeVisita;
     private Visita visita;
     String userID;
 
@@ -36,10 +40,15 @@ public class EditarVisita extends AppCompatActivity {
         setContentView(R.layout.activity_editar_visita);
         getSupportActionBar().hide();
 
-        editNomeVisita = findViewById(R.id.edit_nome);
         editDataVisita = findViewById(R.id.edit_data);
         editHoraVisita = findViewById(R.id.edit_hora);
         btnSalvarEdicao = findViewById(R.id.btnSalvarEdicao);
+
+        AutoCompleteTextView textView = (AutoCompleteTextView) findViewById(R.id.edit_nome);
+        String[] countries = getResources().getStringArray(R.array.instituicoes_array);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
+                countries);
+        textView.setAdapter(adapter);
 
         Bundle bundle = getIntent().getExtras();
         Task<DocumentSnapshot> snapshot = FirebaseFirestore.getInstance().collection("Visitas").document(bundle.getString("agendaId")).get();
@@ -55,12 +64,12 @@ public class EditarVisita extends AppCompatActivity {
             }
         });
 
-
-
         btnSalvarEdicao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 salvarEdicao();
+                Intent intent =  new Intent(EditarVisita.this, FormAgenda.class);
+                startActivity(intent);
             }
         });
     }

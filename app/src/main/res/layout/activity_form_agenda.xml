@@ -30,8 +30,8 @@
         <View
             android:id="@+id/containerComponents"
             style="@style/ContainerComponents"
-            android:layout_width="349dp"
-            android:layout_height="236dp"
+            android:layout_width="366dp"
+            android:layout_height="346dp"
             android:layout_marginBottom="50dp"
             app:layout_constraintBottom_toTopOf="@+id/bt_agendar"
             app:layout_constraintEnd_toEndOf="parent"
@@ -58,15 +58,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/containerComponents" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/bt_editar"
-            style="@style/Button"
-            android:text="@string/editar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/bt_agendar" />
-
         <TextView
             android:id="@+id/txtVisitas"
             android:layout_width="wrap_content"
@@ -85,11 +76,12 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/bt_sair"
             style="@style/Button"
+            android:layout_marginTop="60dp"
             android:text="@string/sair"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bt_editar" />
+            app:layout_constraintTop_toBottomOf="@+id/bt_agendar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

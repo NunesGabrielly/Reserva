@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
 import com.example.projetofabrica.R;
@@ -26,8 +28,9 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class FormAgendamento extends AppCompatActivity {
-    private EditText editNome, editData, editHora;
+    private EditText editData, editHora;
     private Button btSalvar;
+    private AutoCompleteTextView editNome;
     String userID;
 
     @Override
@@ -36,10 +39,15 @@ public class FormAgendamento extends AppCompatActivity {
         setContentView(R.layout.activity_form_agendamento);
         getSupportActionBar().hide();
 
-        editNome = findViewById(R.id.edit_nome);
         editData = findViewById(R.id.edit_data);
         editHora = findViewById(R.id.edit_hora);
         btSalvar = findViewById(R.id.bt_salvar);
+
+        AutoCompleteTextView textView = (AutoCompleteTextView) findViewById(R.id.edit_nome);
+        String[] countries = getResources().getStringArray(R.array.instituicoes_array);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
+                countries);
+        textView.setAdapter(adapter);
 
         btSalvar.setOnClickListener(new View.OnClickListener() {
             @Override

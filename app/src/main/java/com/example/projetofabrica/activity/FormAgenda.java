@@ -1,5 +1,7 @@
 package com.example.projetofabrica.activity;
 
+import static android.os.Build.VERSION_CODES.R;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,7 +46,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FormAgenda extends AppCompatActivity {
-    private Button btAgendar, btEditar, btSair;
+    private Button btAgendar, btSair;
     private RecyclerView recyclerView;
     private VisitaAdapter visitaAdapter;
     private List<Visita> visitasList;
@@ -60,11 +62,9 @@ public class FormAgenda extends AppCompatActivity {
         getSupportActionBar().hide();
 
         btAgendar = findViewById(R.id.bt_agendar);
-        btEditar = findViewById(R.id.bt_editar);
         btSair = findViewById(R.id.bt_sair);
         nomeUser = findViewById(R.id.textNomeUser);
         recyclerView = findViewById(R.id.recycler);
-
 
         visitasList = new ArrayList<>();
         visitaAdapter= new VisitaAdapter(visitasList);
